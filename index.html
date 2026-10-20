@@ -345,8 +345,9 @@ document.addEventListener("click", function (e) {
   try { last = +localStorage.getItem("dl_" + k) || 0; } catch (x) {}
   if (Date.now() - last < 6 * 3600 * 1000) return; /* one count per browser per game per 6 hours */
   try { localStorage.setItem("dl_" + k, String(Date.now())); } catch (x) {}
-  fetch(CNT + "/hit/" + NS + "/" + k, { keepalive: true }).then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) { if (d && typeof d.value === "number") showCount(k, d.value); }).catch(function () {});
+  fetch(CNT + "/hit/" + NS + "/" + k, { keepalive: true }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) { if (d && typeof d.value === "number") showCount(k, d.value); })
+    .catch(function () { try { localStorage.removeItem("dl_" + k); } catch (x) {} }); /* failed hit: allow another try */
 });
 
 function init() {
