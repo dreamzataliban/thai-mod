@@ -132,6 +132,8 @@ h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 
   .in { max-width: 1560px; }
   .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
+/* 2560x1440 screens: same look as browser zoom 150% */
+@media (min-width: 2400px) { html { zoom: 1.5; } }
 .card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); min-width: 0; transition: transform .15s ease, box-shadow .15s ease; }
 .card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--fg); }
 .art { position: relative; aspect-ratio: 1000 / 312; background: var(--surface-2); overflow: hidden; border-bottom: 1px solid var(--line); }
@@ -309,13 +311,9 @@ function card(m) {
   var dis = function (t) { return '<a class="btn" aria-disabled="true" tabindex="-1">' + t + "</a>"; };
   var link = function (u, t, pri) { return '<a class="btn' + (pri ? " pri" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + t + "</a>"; };
   var btn = "";
-  if (m.drive) {
-    btn += link(m.drive, "ดาวน์โหลด (Google Drive)", true);
-    if (m.pending) btn += '<span class="wait">NexusMods: รออนุมัติ</span>';
-    else if (m.url) btn += link(m.url, "NexusMods", false);
-  } else if (m.pending) btn = dis("รอ NexusMods อนุมัติ");
-  else if (m.url) btn = link(m.url, "ดาวน์โหลดบน NexusMods", true);
-  else btn = dis("ลิงก์กำลังเพิ่ม");
+  if (m.drive) btn += link(m.drive, "ดาวน์โหลด (Google Drive)", true);
+  if (m.url) btn += link(m.url, m.drive ? "NexusMods" : "ดาวน์โหลดบน NexusMods", !m.drive);
+  if (!btn) btn = dis(m.pending ? "รอ NexusMods อนุมัติ" : "ลิงก์กำลังเพิ่ม");
   btn = '<div class="acts">' + btn + "</div>";
   return '<article class="card" data-name="' + esc(m.name.toLowerCase()) + '">' + art +
     '<div class="body"><div class="row"><h3>' + esc(m.name) + '</h3><span class="ver">' + esc(m.ver) + "</span></div>" +
