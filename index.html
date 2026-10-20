@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thai Mod by DREAMZATALIBAN</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600&family=Pixelify+Sans:wght@500;700&display=swap">
+<style>
+/* Layout concept: a game-library shelf. Slim sticky bar, a left-aligned hero with a stair-stepped stack of cover art,
+   a searchable two-column grid of mod cards, a numbered install sequence, and a quiet support block. */
+:root {
+  --bg: #f2f3f7;
+  --surface: #ffffff;
+  --surface-2: #e7e9f2;
+  --fg: #14192b;
+  --muted: #566079;
+  --line: #d3d8e6;
+  --accent: #2b48c9;
+  --on-accent: #ffffff;
+  --gold: #ffd23f;
+  --on-gold: #1a1500;
+  --font-display: "Bai Jamjuree", "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+  --font-body: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+  --font-pixel: "Pixelify Sans", "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1222; --surface: #151c33; --surface-2: #1d2744; --fg: #e9ecf7; --muted: #9aa4c4;
+    --line: #2a3558; --accent: #8ea2ff; --on-accent: #0d1222; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1222; --surface: #151c33; --surface-2: #1d2744; --fg: #e9ecf7; --muted: #9aa4c4;
+  --line: #2a3558; --accent: #8ea2ff; --on-accent: #0d1222; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.in {
+  width: 100%; max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; padding-block: 10px; }
+.mark { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-pixel); font-weight: 700; font-size: 20px; letter-spacing: .04em; text-decoration: none; flex: 1 1 auto; }
+.logo { display: block; width: 32px; height: 32px; border: 2px solid var(--fg); flex: none; }
+.mark small { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .12em; margin-left: 8px; }
+.nav { display: flex; gap: 4px; order: 3; width: 100%; overflow-x: auto; }
+.nav a { font-family: var(--font-display); font-weight: 500; font-size: 15px; text-decoration: none; padding: 6px 12px; color: var(--muted); white-space: nowrap; }
+.nav a:hover { color: var(--fg); }
+.tgl { order: 2; width: 40px; height: 40px; display: grid; place-items: center; background: transparent; color: var(--fg); border: 1px solid var(--line); cursor: pointer; }
+.tgl:hover { background: var(--surface-2); }
+@media (max-width: 479px) { .mark small { display: none; } }
+@media (min-width: 640px) {
+  .nav { order: 2; width: auto; }
+  .tgl { order: 3; }
+  .mark { flex: 0 0 auto; margin-right: auto; }
+}
+
+/* hero */
+.hero { padding-block: 48px 40px; background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 22px 22px; background-position: -1px -1px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 40px; align-items: center; }
+.kicker { display: inline-block; font-family: var(--font-pixel); font-weight: 500; font-size: 14px; letter-spacing: .14em; background: var(--gold); color: var(--on-gold); padding: 2px 10px; margin: 0 0 18px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(40px, 7vw, 76px); line-height: 1.1; margin: 0 0 18px; text-wrap: balance; }
+.lead { font-size: 18px; max-width: 34em; color: var(--muted); margin: 0 0 8px; }
+.credit { font-size: 15px; color: var(--muted); margin: 0 0 26px; }
+.credit b { color: var(--fg); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-display); font-weight: 600; font-size: 16px; text-decoration: none; padding: 11px 20px; border: 2px solid var(--fg); background: transparent; color: var(--fg); cursor: pointer; min-height: 44px; }
+.btn:hover { background: var(--fg); color: var(--bg); }
+.btn.pri { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.pri:hover { filter: brightness(1.1); background: var(--accent); color: var(--on-accent); }
+.btn[aria-disabled="true"] { border-style: dashed; border-color: var(--line); color: var(--muted); background: transparent; cursor: default; pointer-events: none; }
+.stats { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+.stat b { display: block; font-family: var(--font-pixel); font-size: 32px; line-height: 1.1; font-weight: 700; }
+.stat span { font-size: 14px; color: var(--muted); }
+/* endless upward scroll of cover art; the track holds two copies of the list so -50% loops seamlessly */
+.stack { height: 470px; overflow: hidden; padding-right: 48px; min-width: 0; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent); }
+.track { display: flex; flex-direction: column; animation: scrollup 70s linear infinite; will-change: transform; }
+.stack:hover .track { animation-play-state: paused; }
+.track img { display: block; flex: none; width: 100%; height: auto; margin-bottom: 12px; border: 2px solid var(--fg); background: var(--surface-2); }
+.track img:nth-child(3n+2) { transform: translateX(24px); }
+.track img:nth-child(3n) { transform: translateX(48px); }
+@keyframes scrollup { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .stack { padding-right: 24px; height: 340px; }
+  .track img:nth-child(3n+2) { transform: translateX(12px); }
+  .track img:nth-child(3n) { transform: translateX(24px); }
+}
+
+/* sections */
+section { padding-block: 56px; }
+.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 24px; margin-bottom: 28px; }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 40px); line-height: 1.2; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 6px 0 0; max-width: 40em; }
+.search { position: relative; flex: 0 1 320px; min-width: min(100%, 220px); }
+.search input { width: 100%; font: inherit; font-size: 16px; padding: 10px 14px; background: var(--surface); color: var(--fg); border: 2px solid var(--line); min-height: 44px; }
+.search input::placeholder { color: var(--muted); }
+.search input:focus-visible { border-color: var(--accent); outline-offset: 2px; }
+
+/* mod cards */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 760px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); min-width: 0; transition: transform .15s ease, box-shadow .15s ease; }
+.card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--fg); }
+.art { position: relative; aspect-ratio: 1000 / 312; background: var(--surface-2); overflow: hidden; border-bottom: 1px solid var(--line); }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.art.ph { display: flex; align-items: center; padding: 0 6%; background: hsl(var(--h) 52% 32%); color: #fff; }
+.art.ph::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(hsl(var(--h) 60% 45%) 1.5px, transparent 1.5px); background-size: 14px 14px; opacity: .7; }
+.art.ph span { position: relative; font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3.4vw, 38px); line-height: 1.1; text-wrap: balance; }
+.art.ph i { position: absolute; right: 4%; bottom: 8%; font-style: normal; font-family: var(--font-pixel); font-size: 12px; letter-spacing: .14em; background: var(--gold); color: var(--on-gold); padding: 1px 8px; }
+.body { display: flex; flex-direction: column; gap: 10px; padding: 18px 20px 20px; flex: 1; min-width: 0; }
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+h3 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.3; margin: 0; overflow-wrap: anywhere; }
+.ver { flex: 0 0 auto; font-family: var(--font-pixel); font-weight: 500; font-size: 14px; background: var(--surface-2); border: 1px solid var(--line); padding: 0 8px; white-space: nowrap; }
+.note { margin: 0; color: var(--muted); font-size: 15px; flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags li { list-style: none; font-size: 13px; padding: 0 8px; border: 1px solid var(--line); color: var(--muted); }
+.tags { margin: 0; padding: 0; }
+.tags li.full { background: var(--gold); border-color: var(--gold); color: var(--on-gold); font-weight: 600; }
+.acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 6px; }
+.card .btn { font-size: 15px; padding: 8px 16px; }
+.wait { font-size: 14px; color: var(--muted); }
+.empty { padding: 32px; text-align: center; color: var(--muted); border: 2px dashed var(--line); }
+
+/* install */
+.alt { background: var(--surface); border-block: 1px solid var(--line); }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; counter-reset: s; }
+.steps li { list-style: none; counter-increment: s; border-top: 3px solid var(--fg); padding-top: 14px; }
+.steps li::before { content: counter(s); display: block; font-family: var(--font-pixel); font-weight: 700; font-size: 36px; line-height: 1; color: var(--accent); margin-bottom: 8px; }
+.steps h3 { margin-bottom: 6px; }
+.steps p { margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 760px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.good { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 12px 32px; }
+.good h3 { font-size: 18px; }
+.good ul { margin: 0; padding-left: 1.2em; color: var(--muted); font-size: 15px; }
+.good li { margin-bottom: 6px; }
+@media (max-width: 760px) { .good { grid-template-columns: minmax(0, 1fr); } }
+
+/* support */
+.support { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
+.support p { margin: 0 0 12px; max-width: 36em; }
+.support .en { color: var(--muted); font-size: 15px; }
+.qr { margin: 0; border: 2px solid var(--fg); background: #fff; }
+.qr img { display: block; width: 280px; max-width: 100%; height: auto; }
+@media (max-width: 640px) { .support { grid-template-columns: minmax(0, 1fr); } .qr { justify-self: start; } }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var(--muted); font-size: 14px; }
+footer p { margin: 0 0 6px; max-width: 60em; }
+footer b { color: var(--fg); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .track { animation: none; }
+  .card { transition: none; }
+  .card:hover { transform: none; }
+}
+</style>
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head><body>
+
+<header class="top">
+  <div class="in bar">
+    <a class="mark" href="#top"><img class="logo" src="img/avatar.jpg" alt="" width="32" height="32"><span>DREAMZATALIBAN<small>THAI MOD</small></span></a>
+    <nav class="nav" aria-label="เมนูหลัก">
+      <a href="#mods">ม็อดทั้งหมด</a>
+      <a href="#install">วิธีติดตั้ง</a>
+      <a href="#support">สนับสนุน</a>
+    </nav>
+    <button class="tgl" id="tgl" type="button" aria-label="สลับโหมดสว่าง/มืด" title="สลับโหมดสว่าง/มืด">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17" /><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="in hero-grid">
+      <div>
+        <p class="kicker">THAI TRANSLATION</p>
+        <h1>ม็อดภาษาไทย<br>สำหรับเกมพีซี</h1>
+        <p class="lead">แปลข้อความในเกมเป็นภาษาไทย ใส่ฟอนต์ไทยให้พร้อมเล่น ดาวน์โหลดฟรี ไม่มีค่าใช้จ่าย</p>
+        <p class="credit">แปลโดย <b>dreamzataliban</b> [Claude Opus 5.5]</p>
+        <div class="cta">
+          <a class="btn pri" href="#mods">ดูม็อดทั้งหมด</a>
+          <a class="btn" href="#install">วิธีติดตั้ง</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="count">12</b><span>เกมที่แปลแล้ว</span></div>
+          <div class="stat"><b>ฟรี</b><span>ตลอดไป</span></div>
+          <div class="stat"><b>PC</b><span>Steam</span></div>
+        </div>
+      </div>
+      <div class="stack" aria-hidden="true"><div class="track" id="track"></div></div>
+    </div>
+  </div>
+
+  <section id="mods">
+    <div class="in">
+      <div class="head">
+        <div>
+          <h2>ม็อดทั้งหมด</h2>
+          <p class="sub">เลือกเกมที่ต้องการ แล้วดาวน์โหลดจากหน้าม็อด วิธีติดตั้งเฉพาะแต่ละเกมอยู่ในหน้าดาวน์โหลด</p>
+        </div>
+        <div class="search">
+          <input id="q" type="search" placeholder="ค้นหาชื่อเกม" aria-label="ค้นหาชื่อเกม" autocomplete="off">
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="none" hidden>ไม่พบเกมที่ตรงกับคำค้นหา</p>
+    </div>
+  </section>
+
+  <section id="install" class="alt">
+    <div class="in">
+      <div class="head">
+        <div>
+          <h2>วิธีติดตั้ง</h2>
+          <p class="sub">ขั้นตอนโดยรวมของม็อดทุกตัว รายละเอียดของแต่ละเกมดูได้ในไฟล์ที่ดาวน์โหลด</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>ดาวน์โหลดและแตกไฟล์</h3>
+          <p>โหลดไฟล์ม็อดจากหน้าเกมที่ต้องการ แล้วแตกไฟล์ zip ไว้ในเครื่อง</p>
+        </li>
+        <li>
+          <h3>ใส่ไฟล์ในโฟลเดอร์เกม</h3>
+          <p>เปิด Steam คลิกขวาที่เกม เลือก Manage แล้ว Browse local files จากนั้นคัดลอกไฟล์ม็อดไปวาง บางเกมมีสคริปต์ install.bat ให้ดับเบิลคลิก</p>
+        </li>
+        <li>
+          <h3>ตั้งภาษาเป็น English</h3>
+          <p>ม็อดส่วนใหญ่ใส่ภาษาไทยไว้ในช่องภาษาอังกฤษ ตั้งภาษาเกมเป็น English แล้วเข้าเกมได้เลย</p>
+        </li>
+      </ol>
+      <div class="good">
+        <h3>ข้อควรรู้</h3>
+        <ul>
+          <li>ควรสำรองไฟล์เดิมของเกมไว้ก่อนวางทับ</li>
+          <li>ถอนการติดตั้ง: วางไฟล์สำรองกลับ หรือใน Steam ไปที่ Properties &gt; Installed Files &gt; Verify integrity of game files</li>
+          <li>ถ้าเกมอัปเดต ไฟล์ม็อดอาจถูกเขียนทับกลับเป็นภาษาอังกฤษ ให้รอม็อดเวอร์ชันใหม่ที่ตรงกับเกม ห้ามใช้ไฟล์ม็อดเก่ากับเกมเวอร์ชันใหม่</li>
+          <li>ถ้าเจอข้อความล้นกรอบ ตัวอักษรเพี้ยน หรือคำแปลแปลก ๆ ถ่ายภาพหน้าจอแจ้งผู้แปลได้</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="support">
+    <div class="in support">
+      <div>
+        <h2>สนับสนุนผู้แปล</h2>
+        <p style="margin-top:14px">ม็อดทุกตัวฟรีและจะฟรีตลอดไป หากชอบและอยากให้กำลังใจ สามารถช่วยสนับสนุนค่า AI Claude ที่ใช้แปลได้ตามสะดวก ไม่บังคับ ขอบคุณที่ใช้ม็อดครับ</p>
+        <p class="en">These mods are and will always be free. If you enjoy them and would like to support the work, a tip is appreciated but never required.</p>
+      </div>
+      <figure class="qr" id="qrbox" hidden>
+        <img id="qrimg" src="img/qr.jpg" alt="QR PromptPay สำหรับสนับสนุนผู้แปล" width="280">
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in">
+    <p><b>DREAMZATALIBAN</b> · แปลโดย dreamzataliban [Claude Opus 5.5] · 2026</p>
+    <p>ม็อดทั้งหมดเป็นงานแฟนเมด ไม่เกี่ยวข้องกับผู้พัฒนาหรือผู้จัดจำหน่ายเกม ชื่อเกม โลโก้ และภาพต้นฉบับเป็นลิขสิทธิ์ของเจ้าของแต่ละเกม</p>
+  </div>
+</footer>
+
+<script>
+/* drive: "https://drive.google.com/..." adds a Google Drive download button.
+   pending: true = still waiting for NexusMods approval (button disabled; remove it once approved). Fill in a mod's download URL below. An empty string shows a disabled "ลิงก์กำลังเพิ่ม" button. */
+var MODS = [
+  { name: "Castlevania: Lords of Shadow - Mirror of Fate HD", ver: "Steam", img: "mof", note: "แปลเมนู วิธีเล่น ซับไตเติลบทพูดทั้งหมด สมุดสัตว์ประหลาด ไอเท็ม ทักษะ และความสำเร็จ", tags: ["เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/file/d/1AK6E6rA9bqgoSl1UdCSTI_XY6C9bansS/view?usp=drive_link", url: "https://www.nexusmods.com/castlevanialordsofshadowmirroroffatehd/mods/5" },
+  { name: "Castlevania: Lords of Shadow - Ultimate Edition", ver: "V1.0", img: "los1", note: "แปลครบทั้งเกม รวม DLC Reverie / Resurrection สมุดบันทึกการเดินทาง และความสำเร็จ", tags: ["รวม DLC", "เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/file/d/1E__pZUQVAI82wvPsshn5YDmWOZnsh2M8/view?usp=drive_link", url: "https://www.nexusmods.com/castlevanialordsofshadow/mods/25" },
+  { name: "Vanquish", ver: "V1.0", img: "vanquish", note: "แปลข้อความในเกม รวมซับวิทยุและบทพูดระหว่างเล่น (เปิด ตั้งค่า > ระบบ > ข้อความวิทยุ = ON)", tags: ["ซับวิทยุ"], pending: true, drive: "https://drive.google.com/file/d/12T4njfRPicMBGVjjg7uAcd2W6Pd4sxFK/view?usp=drive_link", url: "https://www.nexusmods.com/vanquish/mods/12" },
+  { name: "Castlevania: Lords of Shadow 2", ver: "V1.0", img: "los2", note: "แปลครบทั้งเกมหลักและ DLC Revelations ซับไตเติลคัตซีน บทพูด และสมุดบันทึกการเดินทาง", tags: ["รวม DLC", "เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/file/d/1bP-rUUg80aMfdbiBUnmntsiLra7Eut3Q/view?usp=drive_link", url: "https://www.nexusmods.com/castlevanialordsofshadow2/mods/14" },
+  { name: "CARRION", ver: "V1.0.5", img: "carrion", note: "แปลทั้งเกม ตั้งแต่เมนู คำแนะนำ สกิล จอสรุปด่าน ไปจนถึงบทเรียน Workshop", tags: ["ฟอนต์พิกเซล"], url: "https://www.nexusmods.com/carrion/mods/14" },
+  { name: "The Planet Crafter", ver: "V2.103", img: "planet-crafter", note: "แปลครบทุกบรรทัด เลือกภาษา ไทย (แปลโดย dreamzataliban) ได้ในเมนูตั้งค่า", tags: [], pending: true, drive: "https://drive.google.com/file/d/14J2BIdQDCDaLk2Jfc15n3EsaGQG6-Sl2/view?usp=drive_link", url: "https://www.nexusmods.com/mods/1?game_id=10717" },
+  { name: "Mobile Suit Gundam SEED Battle Destiny Remastered", ver: "V1.0.1", img: "gundam-seed", note: "แปลเมนู คำอธิบายภารกิจ ข้อมูล MS / นักบิน และบทพูดทั้งหมด มีม็อดเสริมกล้องกว้างและย่อ HUD", tags: ["ม็อดเสริม"], url: "https://www.nexusmods.com/mobilesuitgundamseedbattledestinyremastered/mods/11" },
+  { name: "Seablip", ver: "V0.8.5_15", img: "seablip", note: "แปลข้อความทั้งเกมราว 3,400 บรรทัด จัดวรรณยุกต์และสระไม่ให้ซ้อนทับกัน", tags: ["ฟอนต์ไทย"], pending: true, drive: "https://drive.google.com/file/d/1jSB8D6TvDbg9MhauLqFfn2YgZ_GQd8rY/view?usp=drive_link", url: "" },
+  { name: "Rogue Legacy 2", ver: "V1.2.2", img: "rogue-legacy-2", note: "ม็อดภาษาไทยสำหรับ Rogue Legacy 2", tags: ["PC"], pending: true, drive: "https://drive.google.com/file/d/1_IXS3YPaM7B-t7BIK7nsLXHNf7TxN3BX/view?usp=drive_link", url: "https://www.nexusmods.com/roguelegacy2/mods/53" },
+  { name: "Little Sim World", ver: "V1.1.1", img: "little-sim-world", note: "แปลครบทั้งเกม ทั้งเมนู บทสอน เควสต์ คัตซีน โพสต์ Yapper และบทสนทนา NPC", tags: [], pending: true, drive: "https://drive.google.com/file/d/1K6qi_QIKDoueGdc4FxK-iOLOJBd-1nOc/view?usp=drive_link", url: "https://www.nexusmods.com/mods/1?game_id=10714" },
+  { name: "To Pixelia", ver: "V1.1.28", img: "to-pixelia", note: "ม็อดภาษาไทยสำหรับ To Pixelia", tags: ["PC"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1mqsG5qQ-w1YqPD2dkg4TO9cdw22VaKQM", url: "" },
+  { name: "Car Park Capital", ver: "V1.0.1", img: "car-park-capital", note: "ม็อดภาษาไทยสำหรับ Car Park Capital", tags: ["PC"], url: "https://www.nexusmods.com/carparkcapital/mods/2" }
+];
+
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+function card(m) {
+  var art = m.img
+    ? '<div class="art"><img src="img/' + m.img + '.jpg" alt="ภาพปก ' + esc(m.name) + ' ม็อดภาษาไทย" width="1000" height="312" loading="lazy"></div>'
+    : '<div class="art ph" style="--h:' + m.hue + '"><span>' + esc(m.name) + '</span><i>THAI</i></div>';
+  var tags = '<ul class="tags"><li class="full">แปล 100%</li><li>PC</li>' + (m.tags || []).filter(function (t) { return t !== "PC"; }).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
+  var dis = function (t) { return '<a class="btn" aria-disabled="true" tabindex="-1">' + t + "</a>"; };
+  var link = function (u, t, pri) { return '<a class="btn' + (pri ? " pri" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + t + "</a>"; };
+  var btn = "";
+  if (m.drive) {
+    btn += link(m.drive, "ดาวน์โหลด (Google Drive)", true);
+    if (m.pending) btn += '<span class="wait">NexusMods: รออนุมัติ</span>';
+    else if (m.url) btn += link(m.url, "NexusMods", false);
+  } else if (m.pending) btn = dis("รอ NexusMods อนุมัติ");
+  else if (m.url) btn = link(m.url, "ดาวน์โหลดบน NexusMods", true);
+  else btn = dis("ลิงก์กำลังเพิ่ม");
+  btn = '<div class="acts">' + btn + "</div>";
+  return '<article class="card" data-name="' + esc(m.name.toLowerCase()) + '">' + art +
+    '<div class="body"><div class="row"><h3>' + esc(m.name) + '</h3><span class="ver">' + esc(m.ver) + "</span></div>" +
+    '<p class="note">' + esc(m.note) + "</p>" + tags + btn + "</div></article>";
+}
+
+var grid = document.getElementById("grid");
+grid.innerHTML = MODS.map(card).join("");
+document.getElementById("count").textContent = MODS.length;
+
+var q = document.getElementById("q"), none = document.getElementById("none");
+q.addEventListener("input", function () {
+  var v = q.value.trim().toLowerCase(), shown = 0;
+  Array.prototype.forEach.call(grid.children, function (el) {
+    var hit = !v || el.getAttribute("data-name").indexOf(v) !== -1;
+    el.hidden = !hit;
+    if (hit) shown++;
+  });
+  none.hidden = shown > 0;
+});
+
+
+/* hero: endless cover scroll built from every mod that has cover art */
+(function () {
+  var covers = MODS.filter(function (m) { return m.img; }).map(function (m) { return m.img; });
+  var html = "";
+  for (var k = 0; k < 2; k++) covers.forEach(function (c) { html += '<img src="img/' + c + '.jpg" alt="" width="1000" height="312">'; });
+  document.getElementById("track").innerHTML = html;
+})();
+
+/* QR appears only when img/qr.jpg is published alongside the page */
+var qi = document.getElementById("qrimg");
+function showQr() { document.getElementById("qrbox").hidden = false; }
+if (qi.complete && qi.naturalWidth > 0) showQr(); else qi.addEventListener("load", showQr);
+
+/* theme toggle */
+document.getElementById("tgl").addEventListener("click", function () {
+  var root = document.documentElement;
+  var cur = root.getAttribute("data-theme");
+  if (!cur) cur = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  var next = cur === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", next);
+  try { localStorage.setItem("theme", next); } catch (e) {}
+});
+try { var t = localStorage.getItem("theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+</body></html>
