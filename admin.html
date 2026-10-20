@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>จัดการเว็บ Thai Mod</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #f1f3f9; --surface: #ffffff; --surface-2: #e8ebf5; --fg: #14192b; --muted: #566079;
+  --line: #d3d8e6; --accent: #2b48c9; --on-accent: #ffffff; --ok: #1a7f45; --warn: #a15c00; --bad: #c0262d;
+  --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1222; --surface: #151c33; --surface-2: #1d2744; --fg: #e9ecf7; --muted: #9aa4c4;
+    --line: #2a3558; --accent: #8ea2ff; --on-accent: #0d1222; --ok: #5fd08a; --warn: #f0b45a; --bad: #ff8a90;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.6; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 120px; }
+h1 { font-size: 24px; margin: 8px 0 4px; }
+h2 { font-size: 18px; margin: 0 0 8px; }
+p { margin: 0 0 8px; }
+.muted { color: var(--muted); font-size: 14px; }
+.panel { background: var(--surface); border: 1px solid var(--line); padding: 16px; margin: 16px 0; }
+label { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 4px; }
+input[type=text], input[type=password], input[type=url], textarea, select {
+  width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); padding: 8px 10px; border-radius: 0;
+}
+textarea { min-height: 84px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button { font: inherit; font-weight: 600; cursor: pointer; border: 1px solid var(--fg); background: transparent; color: var(--fg); padding: 8px 14px; min-height: 40px; }
+button:hover:not(:disabled) { background: var(--fg); color: var(--bg); }
+button.pri { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+button.pri:hover:not(:disabled) { filter: brightness(1.1); background: var(--accent); color: var(--on-accent); }
+button.danger { border-color: var(--bad); color: var(--bad); }
+button.danger:hover:not(:disabled) { background: var(--bad); color: var(--bg); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.row > .grow { flex: 1 1 220px; }
+.list { display: grid; gap: 10px; }
+.item { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; background: var(--surface); border: 1px solid var(--line); padding: 10px; }
+.item img, .item .noimg { width: 112px; height: 35px; object-fit: cover; background: var(--surface-2); display: block; }
+.item h3 { margin: 0; font-size: 16px; }
+.item .meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+.pill { font-size: 12px; padding: 0 8px; border: 1px solid var(--line); color: var(--muted); }
+.pill.ok { color: var(--ok); border-color: var(--ok); }
+.pill.wait { color: var(--warn); border-color: var(--warn); }
+.item .acts { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; }
+.item .acts button { min-height: 36px; padding: 4px 10px; font-size: 14px; }
+.bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--line); padding: 10px 16px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+.bar .in { max-width: 880px; margin: 0 auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.bar .msg { flex: 1 1 200px; font-size: 14px; }
+.msg.ok { color: var(--ok); } .msg.err { color: var(--bad); } .msg.info { color: var(--muted); }
+dialog { width: min(640px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--fg); padding: 16px; }
+dialog::backdrop { background: rgba(0, 0, 0, .55); }
+.radios { display: flex; gap: 16px; flex-wrap: wrap; }
+.radios label { display: flex; gap: 6px; align-items: center; font-weight: 500; margin: 4px 0; }
+.preview { width: 100%; max-width: 400px; aspect-ratio: 1000 / 312; object-fit: cover; background: var(--surface-2); display: block; margin-top: 6px; }
+details summary { cursor: pointer; font-weight: 600; }
+ol { margin: 8px 0 0; padding-left: 22px; }
+code { background: var(--surface-2); padding: 0 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>จัดการเว็บ Thai Mod</h1>
+  <p class="muted">เพิ่ม แก้ไข ลบ และเรียงลำดับเกม แล้วกด "บันทึกขึ้นเว็บ" เว็บจริงจะอัปเดตภายในประมาณ 1 นาที</p>
+
+  <section class="panel" id="tokenPanel">
+    <h2>รหัสเข้าถึง GitHub (token)</h2>
+    <p class="muted" id="tokenState">ยังไม่ได้ใส่ token</p>
+    <div class="row">
+      <input class="grow" type="password" id="token" placeholder="github_pat_..." autocomplete="off" aria-label="GitHub token">
+      <button class="pri" id="btnToken">เชื่อมต่อ</button>
+      <button id="btnForget">ลืม token</button>
+    </div>
+    <details style="margin-top:12px">
+      <summary>วิธีสร้าง token (ทำครั้งเดียว)</summary>
+      <ol>
+        <li>เข้า GitHub แล้วไปที่ Settings &gt; Developer settings &gt; Personal access tokens &gt; <b>Fine-grained tokens</b> &gt; Generate new token</li>
+        <li>ตั้งชื่อ เช่น <code>thai-mod-admin</code> และเลือกวันหมดอายุตามต้องการ</li>
+        <li>Repository access: เลือก <b>Only select repositories</b> แล้วเลือก <code>thai-mod</code> เท่านั้น</li>
+        <li>Permissions &gt; Repository permissions: ตั้ง <b>Contents</b> เป็น <b>Read and write</b></li>
+        <li>กด Generate token แล้วคัดลอกมาวางในช่องด้านบน</li>
+      </ol>
+      <p class="muted" style="margin-top:8px">token จะถูกเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ถูกส่งไปที่อื่นนอกจาก GitHub ถ้าใช้เครื่องสาธารณะ ให้กด "ลืม token" หลังใช้งาน</p>
+    </details>
+  </section>
+
+  <div class="row" style="justify-content:space-between;margin-top:20px">
+    <h2 style="margin:0">รายการเกม <span class="muted" id="count"></span></h2>
+    <button class="pri" id="btnAdd" disabled>+ เพิ่มเกมใหม่</button>
+  </div>
+  <div class="list" id="list" style="margin-top:10px"></div>
+</div>
+
+<div class="bar">
+  <div class="in">
+    <div class="msg info" id="msg" role="status" aria-live="polite">ใส่ token เพื่อเริ่มต้น</div>
+    <button class="pri" id="btnSave" disabled>บันทึกขึ้นเว็บ</button>
+  </div>
+</div>
+
+<dialog id="dlg">
+  <form method="dialog" id="form" novalidate>
+    <h2 id="dlgTitle">แก้ไขเกม</h2>
+    <label for="fName">ชื่อเกม (ตามชื่อใน Steam)</label>
+    <input type="text" id="fName" required>
+    <label for="fVer">เวอร์ชันม็อด</label>
+    <input type="text" id="fVer" placeholder="เช่น V1.0">
+    <label for="fNote">คำอธิบายสั้น ๆ</label>
+    <textarea id="fNote"></textarea>
+    <label for="fTags">แท็กเพิ่มเติม (คั่นด้วยเครื่องหมายจุลภาค)</label>
+    <input type="text" id="fTags" placeholder="เช่น Early Access, ซับไทย">
+    <p class="muted">แท็ก "แปล 100%" และโลโก้ Steam ใส่ให้อัตโนมัติทุกเกม</p>
+    <label for="fUrl">ลิงก์หน้าม็อดบน NexusMods</label>
+    <input type="url" id="fUrl" placeholder="https://www.nexusmods.com/...">
+    <label for="fDrive">ลิงก์ Google Drive (ถ้ามี)</label>
+    <input type="url" id="fDrive" placeholder="วางลิงก์แชร์ได้เลย ระบบแปลงเป็นลิงก์ดาวน์โหลดตรงให้">
+    <label>สถานะบน NexusMods</label>
+    <div class="radios">
+      <label><input type="radio" name="status" value="live" checked> ลงแล้ว (แสดงปุ่ม NexusMods)</label>
+      <label><input type="radio" name="status" value="pending"> รออนุมัติ</label>
+    </div>
+    <p class="muted">ถ้ามีลิงก์ Drive และสถานะ "ลงแล้ว" จะแสดงทั้งสองปุ่ม ถ้าไม่ต้องการปุ่ม Drive ให้ลบลิงก์ Drive ออก</p>
+    <label for="fImg">ภาพปก (1920x600 หรืออัตราส่วนใกล้เคียง)</label>
+    <input type="file" id="fImg" accept="image/*">
+    <img class="preview" id="preview" alt="ตัวอย่างภาพปก" hidden>
+    <p class="muted" id="imgNote"></p>
+    <div class="row" style="justify-content:flex-end;margin-top:16px">
+      <button type="button" id="btnCancel">ยกเลิก</button>
+      <button type="button" class="pri" id="btnOk">ตกลง</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  var OWNER = "dreamzataliban", REPO = "thai-mod", API = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/";
+  var mods = [], sha = "", dirty = false, token = "", editing = -1, pendingImgs = {}; // slug -> {b64, url}
+  var $ = function (id) { return document.getElementById(id); };
+
+  function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } }
+
+  function say(t, cls) { var m = $("msg"); m.textContent = t; m.className = "msg " + (cls || "info"); }
+  function setDirty(v) { dirty = v; $("btnSave").disabled = !v || !token; if (v) say("มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก", "info"); }
+  window.addEventListener("beforeunload", function (e) { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+  function gh(path, opts) {
+    opts = opts || {};
+    opts.headers = Object.assign({ "Accept": "application/vnd.github+json", "Authorization": "Bearer " + token }, opts.headers || {});
+    opts.cache = "no-store";
+    return fetch(API + path, opts);
+  }
+  function b64FromText(s) { var b = new TextEncoder().encode(s), r = ""; for (var i = 0; i < b.length; i += 0x8000) r += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(r); }
+  function textFromB64(s) { var r = atob(s.replace(/\s/g, "")), b = new Uint8Array(r.length); for (var i = 0; i < r.length; i++) b[i] = r.charCodeAt(i); return new TextDecoder().decode(b); }
+  function errText(r, j) { if (r.status === 401) return "token ไม่ถูกต้องหรือหมดอายุ"; if (r.status === 403) return "token ไม่มีสิทธิ์ (ต้องตั้ง Contents เป็น Read and write)"; if (r.status === 404) return "ไม่พบไฟล์/repo หรือ token ไม่ครอบคลุม repo นี้"; if (r.status === 409 || r.status === 422) return "ข้อมูลบน GitHub เปลี่ยนไปแล้ว กรุณารีเฟรชหน้านี้แล้วลองใหม่"; return (j && j.message) || ("ผิดพลาด " + r.status); }
+
+  function driveFix(u) {
+    u = (u || "").trim(); if (!u) return "";
+    var m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/(?:open|uc)\?[^#]*id=([\w-]+)/);
+    return m ? "https://drive.google.com/uc?export=download&id=" + m[1] : u;
+  }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "game-" + Date.now().toString(36); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  function render() {
+    $("count").textContent = "(" + mods.length + ")";
+    $("list").innerHTML = mods.map(function (m, i) {
+      var src = pendingImgs[m.img] ? pendingImgs[m.img].url : (m.img ? "img/" + m.img + ".jpg" : "");
+      var st = m.pending ? '<span class="pill wait">รออนุมัติ</span>' : (m.url ? '<span class="pill ok">ลง NexusMods แล้ว</span>' : '<span class="pill">ยังไม่มีลิงก์</span>');
+      var dr = m.drive ? '<span class="pill">Drive</span>' : "";
+      return '<div class="item">' + (src ? '<img src="' + esc(src) + '" alt="">' : '<div class="noimg"></div>') +
+        '<div><h3>' + esc(m.name) + '</h3><div class="meta"><span class="muted">' + esc(m.ver) + "</span>" + st + dr + "</div></div>" +
+        '<div class="acts"><button data-a="up" data-i="' + i + '"' + (i === 0 ? " disabled" : "") + ' aria-label="เลื่อนขึ้น">↑</button>' +
+        '<button data-a="down" data-i="' + i + '"' + (i === mods.length - 1 ? " disabled" : "") + ' aria-label="เลื่อนลง">↓</button>' +
+        '<button data-a="edit" data-i="' + i + '">แก้ไข</button><button class="danger" data-a="del" data-i="' + i + '">ลบ</button></div></div>';
+    }).join("");
+  }
+
+  $("list").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b || b.disabled) return;
+    var i = +b.getAttribute("data-i"), a = b.getAttribute("data-a");
+    if (a === "up" || a === "down") { var j = a === "up" ? i - 1 : i + 1; var t = mods[i]; mods[i] = mods[j]; mods[j] = t; render(); setDirty(true); }
+    else if (a === "del") { if (confirm("ลบ \"" + mods[i].name + "\" ออกจากเว็บ?")) { mods.splice(i, 1); render(); setDirty(true); } }
+    else if (a === "edit") openDlg(i);
+  });
+  $("btnAdd").addEventListener("click", function () { openDlg(-1); });
+
+  var newImg = null; // {b64,url,slug} chosen in the open dialog
+  function openDlg(i) {
+    editing = i; newImg = null; $("fImg").value = "";
+    var m = i >= 0 ? mods[i] : { name: "", ver: "", note: "", tags: [], url: "", drive: "", pending: false, img: "" };
+    $("dlgTitle").textContent = i >= 0 ? "แก้ไขเกม" : "เพิ่มเกมใหม่";
+    $("fName").value = m.name; $("fVer").value = m.ver || ""; $("fNote").value = m.note || "";
+    $("fTags").value = (m.tags || []).join(", "); $("fUrl").value = m.url || ""; $("fDrive").value = m.drive || "";
+    document.querySelector('input[name=status][value=' + (m.pending ? "pending" : "live") + ']').checked = true;
+    var src = m.img ? (pendingImgs[m.img] ? pendingImgs[m.img].url : "img/" + m.img + ".jpg") : "";
+    $("preview").hidden = !src; if (src) $("preview").src = src;
+    $("imgNote").textContent = m.img ? "ใช้ภาพเดิมอยู่ เลือกไฟล์ใหม่เพื่อเปลี่ยน" : "ยังไม่มีภาพปก";
+    $("dlg").showModal();
+  }
+  $("btnCancel").addEventListener("click", function () { $("dlg").close(); });
+
+  $("fImg").addEventListener("change", function () {
+    var f = this.files[0]; if (!f) return;
+    var img = new Image(), u = URL.createObjectURL(f);
+    img.onload = function () {
+      var W = 1000, H = 312, c = document.createElement("canvas"); c.width = W; c.height = H;
+      var s = Math.max(W / img.width, H / img.height), w = img.width * s, h = img.height * s;
+      var x = c.getContext("2d"); x.fillStyle = "#000"; x.fillRect(0, 0, W, H); x.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+      var url = c.toDataURL("image/jpeg", 0.88); URL.revokeObjectURL(u);
+      newImg = { b64: url.split(",")[1], url: url };
+      $("preview").src = url; $("preview").hidden = false; $("imgNote").textContent = "ย่อเป็น 1000x312 อัตโนมัติ จะอัปโหลดตอนกดบันทึกขึ้นเว็บ";
+    };
+    img.onerror = function () { $("imgNote").textContent = "อ่านไฟล์ภาพไม่ได้"; };
+    img.src = u;
+  });
+
+  $("btnOk").addEventListener("click", function () {
+    var name = $("fName").value.trim();
+    if (!name) { alert("กรุณาใส่ชื่อเกม"); $("fName").focus(); return; }
+    var url = $("fUrl").value.trim();
+    if (url && !/^https:\/\//.test(url)) { alert("ลิงก์ NexusMods ต้องขึ้นต้นด้วย https://"); return; }
+    var drive = driveFix($("fDrive").value);
+    if (drive && !/^https:\/\//.test(drive)) { alert("ลิงก์ Drive ต้องขึ้นต้นด้วย https://"); return; }
+    var old = editing >= 0 ? mods[editing] : {};
+    var img = old.img || "";
+    if (newImg) { img = img || slug(name); pendingImgs[img] = newImg; }
+    var m = Object.assign({}, old, {
+      name: name, ver: $("fVer").value.trim(), img: img, note: $("fNote").value.trim(),
+      tags: $("fTags").value.split(",").map(function (t) { return t.trim(); }).filter(Boolean)
+    });
+    if (drive) m.drive = drive; else delete m.drive;
+    if (document.querySelector("input[name=status]:checked").value === "pending") m.pending = true; else delete m.pending;
+    m.url = url;
+    if (!m.img) delete m.img;
+    var ordered = {}; ["name", "ver", "img", "note", "tags", "drive", "pending", "url"].forEach(function (k) { if (k in m) ordered[k] = m[k]; });
+    Object.keys(m).forEach(function (k) { if (!(k in ordered)) ordered[k] = m[k]; });
+    if (editing >= 0) mods[editing] = ordered; else mods.unshift(ordered);
+    $("dlg").close(); render(); setDirty(true);
+  });
+
+  function connect() {
+    if (!token) return;
+    say("กำลังโหลดข้อมูลจาก GitHub...", "info");
+    gh("mods.json").then(function (r) {
+      return r.json().then(function (j) { if (!r.ok) throw new Error(errText(r, j)); return j; });
+    }).then(function (j) {
+      sha = j.sha; mods = JSON.parse(textFromB64(j.content)); render();
+      $("tokenState").textContent = "เชื่อมต่อแล้ว (" + OWNER + "/" + REPO + ")"; $("btnAdd").disabled = false;
+      say("โหลดแล้ว " + mods.length + " เกม", "ok"); setDirty(false); say("โหลดแล้ว " + mods.length + " เกม", "ok");
+    }).catch(function (e) { $("tokenState").textContent = "เชื่อมต่อไม่สำเร็จ"; $("btnAdd").disabled = true; say(e.message || "เชื่อมต่อไม่สำเร็จ", "err"); });
+  }
+  $("btnToken").addEventListener("click", function () {
+    var t = $("token").value.trim(); if (!t) { say("กรุณาวาง token", "err"); return; }
+    token = t; store("rtm_token", t); $("token").value = ""; connect();
+  });
+  $("btnForget").addEventListener("click", function () {
+    token = ""; store("rtm_token", null); mods = []; render(); $("btnAdd").disabled = true; $("btnSave").disabled = true;
+    $("tokenState").textContent = "ยังไม่ได้ใส่ token"; say("ลืม token แล้ว", "info"); setDirty(false); $("btnSave").disabled = true;
+  });
+
+  function putFile(path, b64, message) {
+    return gh(path).then(function (r) { return r.status === 404 ? null : r.json(); }).then(function (cur) {
+      var body = { message: message, content: b64 }; if (cur && cur.sha) body.sha = cur.sha;
+      return gh(path, { method: "PUT", body: JSON.stringify(body) });
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(errText(r, j)); return j; }); });
+  }
+
+  $("btnSave").addEventListener("click", function () {
+    if (!token || !dirty) return;
+    var btn = $("btnSave"); btn.disabled = true; say("กำลังบันทึก...", "info");
+    var used = {}; mods.forEach(function (m) { if (m.img) used[m.img] = 1; });
+    var slugs = Object.keys(pendingImgs).filter(function (s) { return used[s]; });
+    var chain = Promise.resolve();
+    slugs.forEach(function (s) {
+      chain = chain.then(function () { say("กำลังอัปโหลดภาพ " + s + "...", "info"); return putFile("img/" + s + ".jpg", pendingImgs[s].b64, "Upload cover " + s); });
+    });
+    chain.then(function () {
+      say("กำลังบันทึกรายการเกม...", "info");
+      var body = { message: "Update mods list (admin)", content: b64FromText(JSON.stringify(mods, null, 2) + "\n"), sha: sha };
+      return gh("mods.json", { method: "PUT", body: JSON.stringify(body) });
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(errText(r, j)); return j; }); })
+      .then(function (j) { sha = j.content.sha; pendingImgs = {}; dirty = false; render(); say("บันทึกแล้ว เว็บจะอัปเดตภายในประมาณ 1 นาที", "ok"); })
+      .catch(function (e) { btn.disabled = false; say("บันทึกไม่สำเร็จ: " + (e.message || e), "err"); });
+  });
+
+  token = load("rtm_token"); if (token) connect(); render();
+})();
+</script>
+</body>
+</html>

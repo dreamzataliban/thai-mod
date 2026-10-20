@@ -1,0 +1,148 @@
+[
+  {
+    "name": "Road to Vostok",
+    "ver": "v0.2.2.0",
+    "img": "road-to-vostok",
+    "note": "แปลเมนู HUD อินเวนทอรี่ ภารกิจพ่อค้า เหตุการณ์ สูตรคราฟต์ และป้ายสอนเล่น พร้อมฟอนต์ไทย ไม่แก้ไฟล์เกมเดิม ไม่มี .bat",
+    "tags": [
+      "Early Access"
+    ],
+    "url": "https://www.nexusmods.com/roadtovostok/mods/164"
+  },
+  {
+    "name": "Castlevania: Lords of Shadow - Mirror of Fate HD",
+    "ver": "V1.0",
+    "img": "mof",
+    "note": "แปลเมนู วิธีเล่น ซับไตเติลบทพูดทั้งหมด สมุดสัตว์ประหลาด ไอเท็ม ทักษะ และความสำเร็จ",
+    "tags": [
+      "เกมไม่มีขายในโซนไทย"
+    ],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=1AK6E6rA9bqgoSl1UdCSTI_XY6C9bansS",
+    "url": "https://www.nexusmods.com/castlevanialordsofshadowmirroroffatehd/mods/5"
+  },
+  {
+    "name": "Castlevania: Lords of Shadow - Ultimate Edition",
+    "ver": "V1.0",
+    "img": "los1",
+    "note": "แปลครบทั้งเกม รวม DLC Reverie / Resurrection สมุดบันทึกการเดินทาง และความสำเร็จ",
+    "tags": [
+      "รวม DLC",
+      "เกมไม่มีขายในโซนไทย"
+    ],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=1E__pZUQVAI82wvPsshn5YDmWOZnsh2M8",
+    "url": "https://www.nexusmods.com/castlevanialordsofshadow/mods/25"
+  },
+  {
+    "name": "Vanquish",
+    "ver": "V1.0",
+    "img": "vanquish",
+    "note": "แปลข้อความในเกม รวมซับวิทยุและบทพูดระหว่างเล่น (เปิด ตั้งค่า > ระบบ > ข้อความวิทยุ = ON)",
+    "tags": [
+      "ซับวิทยุ"
+    ],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=12T4njfRPicMBGVjjg7uAcd2W6Pd4sxFK",
+    "url": "https://www.nexusmods.com/vanquish/mods/12"
+  },
+  {
+    "name": "Castlevania: Lords of Shadow 2",
+    "ver": "V1.0",
+    "img": "los2",
+    "note": "แปลครบทั้งเกมหลักและ DLC Revelations ซับไตเติลคัตซีน บทพูด และสมุดบันทึกการเดินทาง",
+    "tags": [
+      "รวม DLC",
+      "เกมไม่มีขายในโซนไทย"
+    ],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=1bP-rUUg80aMfdbiBUnmntsiLra7Eut3Q",
+    "url": "https://www.nexusmods.com/castlevanialordsofshadow2/mods/14"
+  },
+  {
+    "name": "CARRION",
+    "ver": "V1.0.5",
+    "img": "carrion",
+    "note": "แปลทั้งเกม ตั้งแต่เมนู คำแนะนำ สกิล จอสรุปด่าน ไปจนถึงบทเรียน Workshop",
+    "tags": [
+      "ฟอนต์พิกเซล"
+    ],
+    "url": "https://www.nexusmods.com/carrion/mods/14"
+  },
+  {
+    "name": "The Planet Crafter",
+    "ver": "V2.103",
+    "img": "planet-crafter",
+    "note": "แปลครบทุกบรรทัด เลือกภาษา ไทย (แปลโดย dreamzataliban) ได้ในเมนูตั้งค่า",
+    "tags": [],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=14J2BIdQDCDaLk2Jfc15n3EsaGQG6-Sl2",
+    "url": "https://www.nexusmods.com/mods/1?game_id=10717"
+  },
+  {
+    "name": "Mobile Suit Gundam SEED Battle Destiny Remastered",
+    "ver": "V1.0.1",
+    "img": "gundam-seed",
+    "note": "แปลเมนู คำอธิบายภารกิจ ข้อมูล MS / นักบิน และบทพูดทั้งหมด มีม็อดเสริมกล้องกว้างและย่อ HUD",
+    "tags": [
+      "ม็อดเสริม"
+    ],
+    "url": "https://www.nexusmods.com/mobilesuitgundamseedbattledestinyremastered/mods/11"
+  },
+  {
+    "name": "Seablip",
+    "ver": "V0.8.5_15",
+    "img": "seablip",
+    "note": "แปลข้อความทั้งเกมราว 3,400 บรรทัด จัดวรรณยุกต์และสระไม่ให้ซ้อนทับกัน",
+    "tags": [
+      "ฟอนต์ไทย",
+      "Early Access"
+    ],
+    "url": "https://www.nexusmods.com/seablip/mods/1"
+  },
+  {
+    "name": "Rogue Legacy 2",
+    "ver": "V1.2.2",
+    "img": "rogue-legacy-2",
+    "note": "ม็อดภาษาไทยสำหรับ Rogue Legacy 2",
+    "tags": [
+      "PC"
+    ],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=1_IXS3YPaM7B-t7BIK7nsLXHNf7TxN3BX",
+    "url": "https://www.nexusmods.com/roguelegacy2/mods/53"
+  },
+  {
+    "name": "Little Sim World",
+    "ver": "V1.1.1",
+    "img": "little-sim-world",
+    "note": "แปลครบทั้งเกม ทั้งเมนู บทสอน เควสต์ คัตซีน โพสต์ Yapper และบทสนทนา NPC",
+    "tags": [
+      "Early Access"
+    ],
+    "pending": true,
+    "drive": "https://drive.google.com/uc?export=download&id=1K6qi_QIKDoueGdc4FxK-iOLOJBd-1nOc",
+    "url": "https://www.nexusmods.com/mods/1?game_id=10714"
+  },
+  {
+    "name": "To Pixelia",
+    "ver": "V1.1.28",
+    "img": "to-pixelia",
+    "note": "ม็อดภาษาไทยสำหรับ To Pixelia",
+    "tags": [
+      "PC"
+    ],
+    "url": "https://www.nexusmods.com/topixelia/mods/1"
+  },
+  {
+    "name": "Car Park Capital",
+    "ver": "V1.0.1",
+    "img": "car-park-capital",
+    "note": "ม็อดภาษาไทยสำหรับ Car Park Capital",
+    "tags": [
+      "PC",
+      "Early Access"
+    ],
+    "url": "https://www.nexusmods.com/carparkcapital/mods/2"
+  }
+]
