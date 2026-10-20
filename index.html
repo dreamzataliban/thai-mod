@@ -196,7 +196,7 @@ footer b { color: var(--fg); font-weight: 600; }
         <div class="stats">
           <div class="stat"><b id="count">12</b><span>เกมที่แปลแล้ว</span></div>
           <div class="stat"><b>ฟรี</b><span>ตลอดไป</span></div>
-          <div class="stat"><b>PC</b><span>Steam</span></div>
+          <div class="stat"><b>Steam</b><span>แพลตฟอร์ม</span></div>
         </div>
       </div>
       <div class="stack" aria-hidden="true"><div class="track" id="track"></div></div>
@@ -279,7 +279,7 @@ footer b { color: var(--fg); font-weight: 600; }
    pending: true = still waiting for NexusMods approval (button disabled; remove it once approved). Fill in a mod's download URL below. An empty string shows a disabled "ลิงก์กำลังเพิ่ม" button. */
 var MODS = [
   { name: "Road to Vostok", ver: "v0.2.2.0", img: "road-to-vostok", note: "แปลเมนู HUD อินเวนทอรี่ ภารกิจพ่อค้า เหตุการณ์ สูตรคราฟต์ และป้ายสอนเล่น พร้อมฟอนต์ไทย ไม่แก้ไฟล์เกมเดิม ไม่มี .bat", tags: ["Early Access"] },
-  { name: "Castlevania: Lords of Shadow - Mirror of Fate HD", ver: "1.0", img: "mof", note: "แปลเมนู วิธีเล่น ซับไตเติลบทพูดทั้งหมด สมุดสัตว์ประหลาด ไอเท็ม ทักษะ และความสำเร็จ", tags: ["เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1AK6E6rA9bqgoSl1UdCSTI_XY6C9bansS", url: "https://www.nexusmods.com/castlevanialordsofshadowmirroroffatehd/mods/5" },
+  { name: "Castlevania: Lords of Shadow - Mirror of Fate HD", ver: "V1.0", img: "mof", note: "แปลเมนู วิธีเล่น ซับไตเติลบทพูดทั้งหมด สมุดสัตว์ประหลาด ไอเท็ม ทักษะ และความสำเร็จ", tags: ["เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1AK6E6rA9bqgoSl1UdCSTI_XY6C9bansS", url: "https://www.nexusmods.com/castlevanialordsofshadowmirroroffatehd/mods/5" },
   { name: "Castlevania: Lords of Shadow - Ultimate Edition", ver: "V1.0", img: "los1", note: "แปลครบทั้งเกม รวม DLC Reverie / Resurrection สมุดบันทึกการเดินทาง และความสำเร็จ", tags: ["รวม DLC", "เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1E__pZUQVAI82wvPsshn5YDmWOZnsh2M8", url: "https://www.nexusmods.com/castlevanialordsofshadow/mods/25" },
   { name: "Vanquish", ver: "V1.0", img: "vanquish", note: "แปลข้อความในเกม รวมซับวิทยุและบทพูดระหว่างเล่น (เปิด ตั้งค่า > ระบบ > ข้อความวิทยุ = ON)", tags: ["ซับวิทยุ"], pending: true, drive: "https://drive.google.com/uc?export=download&id=12T4njfRPicMBGVjjg7uAcd2W6Pd4sxFK", url: "https://www.nexusmods.com/vanquish/mods/12" },
   { name: "Castlevania: Lords of Shadow 2", ver: "V1.0", img: "los2", note: "แปลครบทั้งเกมหลักและ DLC Revelations ซับไตเติลคัตซีน บทพูด และสมุดบันทึกการเดินทาง", tags: ["รวม DLC", "เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1bP-rUUg80aMfdbiBUnmntsiLra7Eut3Q", url: "https://www.nexusmods.com/castlevanialordsofshadow2/mods/14" },
@@ -299,7 +299,7 @@ function card(m) {
   var art = m.img
     ? '<div class="art"><img src="img/' + m.img + '.jpg" alt="ภาพปก ' + esc(m.name) + ' ม็อดภาษาไทย" width="1000" height="312" loading="lazy"></div>'
     : '<div class="art ph" style="--h:' + m.hue + '"><span>' + esc(m.name) + '</span><i>THAI</i></div>';
-  var tags = '<ul class="tags"><li class="full">แปล 100%</li><li>PC</li>' + (m.tags || []).filter(function (t) { return t !== "PC"; }).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
+  var tags = '<ul class="tags"><li class="full">แปล 100%</li><li>Steam</li>' + (m.tags || []).filter(function (t) { return t !== "PC" && t !== "Steam"; }).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
   var dis = function (t) { return '<a class="btn" aria-disabled="true" tabindex="-1">' + t + "</a>"; };
   var link = function (u, t, pri) { return '<a class="btn' + (pri ? " pri" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + t + "</a>"; };
   var btn = "";
