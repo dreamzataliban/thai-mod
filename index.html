@@ -1,5 +1,3 @@
-<!doctype html>
-<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thai Mod by DREAMZATALIBAN</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -168,8 +166,6 @@ footer b { color: var(--fg); font-weight: 600; }
   .card:hover { transform: none; }
 }
 </style>
-<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-</head><body>
 
 <header class="top">
   <div class="in bar">
@@ -282,6 +278,7 @@ footer b { color: var(--fg); font-weight: 600; }
 /* drive: "https://drive.google.com/..." adds a Google Drive download button.
    pending: true = still waiting for NexusMods approval (button disabled; remove it once approved). Fill in a mod's download URL below. An empty string shows a disabled "ลิงก์กำลังเพิ่ม" button. */
 var MODS = [
+  { name: "Road to Vostok", ver: "v0.2.2.0", img: "road-to-vostok", note: "แปลเมนู HUD อินเวนทอรี่ ภารกิจพ่อค้า เหตุการณ์ สูตรคราฟต์ และป้ายสอนเล่น พร้อมฟอนต์ไทย ไม่แก้ไฟล์เกมเดิม ไม่มี .bat", tags: ["Early Access"] },
   { name: "Castlevania: Lords of Shadow - Mirror of Fate HD", ver: "Steam", img: "mof", note: "แปลเมนู วิธีเล่น ซับไตเติลบทพูดทั้งหมด สมุดสัตว์ประหลาด ไอเท็ม ทักษะ และความสำเร็จ", tags: ["เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1AK6E6rA9bqgoSl1UdCSTI_XY6C9bansS", url: "https://www.nexusmods.com/castlevanialordsofshadowmirroroffatehd/mods/5" },
   { name: "Castlevania: Lords of Shadow - Ultimate Edition", ver: "V1.0", img: "los1", note: "แปลครบทั้งเกม รวม DLC Reverie / Resurrection สมุดบันทึกการเดินทาง และความสำเร็จ", tags: ["รวม DLC", "เกมไม่มีขายในโซนไทย"], pending: true, drive: "https://drive.google.com/uc?export=download&id=1E__pZUQVAI82wvPsshn5YDmWOZnsh2M8", url: "https://www.nexusmods.com/castlevanialordsofshadow/mods/25" },
   { name: "Vanquish", ver: "V1.0", img: "vanquish", note: "แปลข้อความในเกม รวมซับวิทยุและบทพูดระหว่างเล่น (เปิด ตั้งค่า > ระบบ > ข้อความวิทยุ = ON)", tags: ["ซับวิทยุ"], pending: true, drive: "https://drive.google.com/uc?export=download&id=12T4njfRPicMBGVjjg7uAcd2W6Pd4sxFK", url: "https://www.nexusmods.com/vanquish/mods/12" },
@@ -359,4 +356,3 @@ document.getElementById("tgl").addEventListener("click", function () {
 });
 try { var t = localStorage.getItem("theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
 </script>
-</body></html>
