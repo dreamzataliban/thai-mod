@@ -24,12 +24,13 @@
 * { box-sizing: border-box; }
 html { background: var(--bg); }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.6; }
-.wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 120px; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 120px; }
 h1 { font-size: 24px; margin: 8px 0 4px; }
 h2 { font-size: 18px; margin: 0 0 8px; }
 p { margin: 0 0 8px; }
 .muted { color: var(--muted); font-size: 14px; }
-.panel { background: var(--surface); border: 1px solid var(--line); padding: 16px; margin: 16px 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); padding: 16px; margin: 12px 0; }
+.panel.slim { padding: 8px 12px; }
 label { display: block; font-size: 14px; font-weight: 600; margin: 12px 0 4px; }
 input[type=text], input[type=password], input[type=url], textarea, select {
   width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); padding: 8px 10px; border-radius: 0;
@@ -45,18 +46,30 @@ button.danger:hover:not(:disabled) { background: var(--bad); color: var(--bg); }
 button:disabled { opacity: .45; cursor: not-allowed; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .row > .grow { flex: 1 1 220px; }
-.list { display: grid; gap: 10px; }
-.item { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; background: var(--surface); border: 1px solid var(--line); padding: 10px; }
-.item img, .item .noimg { width: 112px; height: 35px; object-fit: cover; background: var(--surface-2); display: block; }
-.item h3 { margin: 0; font-size: 16px; }
-.item .meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
-.pill { font-size: 12px; padding: 0 8px; border: 1px solid var(--line); color: var(--muted); }
+.toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 10px 0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--line); margin-top: 12px; }
+.toolbar input[type=search] { flex: 1 1 200px; font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); padding: 8px 10px; min-height: 40px; border-radius: 0; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { min-height: 36px; padding: 4px 12px; font-size: 14px; font-weight: 500; border-color: var(--line); color: var(--muted); }
+.chip[aria-pressed=true] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-top: 10px; }
+@media (min-width: 900px) { .list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.item { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); padding: 6px 8px; min-height: 52px; }
+.item img, .item .noimg { flex: none; width: 80px; height: 25px; object-fit: cover; background: var(--surface-2); display: block; }
+.item .main { flex: 1 1 auto; min-width: 0; }
+.item h3 { margin: 0; font-size: 15px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
+.item .ver { font-size: 12px; color: var(--muted); }
+.pill { font: inherit; font-size: 12px; font-weight: 500; line-height: 1.5; min-height: 0; padding: 0 8px; border: 1px solid var(--line); color: var(--muted); background: transparent; }
+button.pill { cursor: pointer; }
+button.pill:hover:not(:disabled) { background: var(--surface-2); color: var(--fg); }
 .pill.ok { color: var(--ok); border-color: var(--ok); }
 .pill.wait { color: var(--warn); border-color: var(--warn); }
-.item .acts { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; }
-.item .acts button { min-height: 36px; padding: 4px 10px; font-size: 14px; }
+.item .acts { flex: none; display: flex; gap: 4px; }
+.item .acts button { min-height: 32px; width: 32px; padding: 0; font-size: 15px; line-height: 1; }
+@media (max-width: 519px) { .item img, .item .noimg { display: none; } }
+.empty { text-align: center; color: var(--muted); padding: 24px 0; }
 .bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--line); padding: 10px 16px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
-.bar .in { max-width: 880px; margin: 0 auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.bar .in { max-width: 1100px; margin: 0 auto; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .bar .msg { flex: 1 1 200px; font-size: 14px; }
 .msg.ok { color: var(--ok); } .msg.err { color: var(--bad); } .msg.info { color: var(--muted); }
 dialog { width: min(640px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--fg); padding: 16px; }
@@ -71,10 +84,15 @@ code { background: var(--surface-2); padding: 0 4px; }
 </head>
 <body>
 <div class="wrap">
-  <h1>จัดการเว็บ Thai Mod</h1>
+  <h1>จัดการเว็บ Thai Mod <span class="muted" id="count"></span></h1>
   <p class="muted">เพิ่ม แก้ไข ลบ และเรียงลำดับเกม แล้วกด "บันทึกขึ้นเว็บ" เว็บจริงจะอัปเดตภายในประมาณ 1 นาที</p>
 
   <section class="panel" id="tokenPanel">
+    <div class="row" id="tokenLine" hidden>
+      <span class="grow muted" id="tokenOk"></span>
+      <button id="btnTokenEdit">ตั้งค่า token</button>
+    </div>
+    <div id="tokenForm">
     <h2>รหัสเข้าถึง GitHub (token)</h2>
     <p class="muted" id="tokenState">ยังไม่ได้ใส่ token</p>
     <div class="row">
@@ -93,13 +111,15 @@ code { background: var(--surface-2); padding: 0 4px; }
       </ol>
       <p class="muted" style="margin-top:8px">token จะถูกเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น ไม่ถูกส่งไปที่อื่นนอกจาก GitHub ถ้าใช้เครื่องสาธารณะ ให้กด "ลืม token" หลังใช้งาน</p>
     </details>
+    </div>
   </section>
 
-  <div class="row" style="justify-content:space-between;margin-top:20px">
-    <h2 style="margin:0">รายการเกม <span class="muted" id="count"></span></h2>
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="ค้นหาชื่อเกม" aria-label="ค้นหาชื่อเกม">
+    <div class="chips" id="chips" role="group" aria-label="กรองสถานะ"></div>
     <button class="pri" id="btnAdd" disabled>+ เพิ่มเกมใหม่</button>
   </div>
-  <div class="list" id="list" style="margin-top:10px"></div>
+  <div class="list" id="list"></div>
 </div>
 
 <div class="bar">
@@ -145,7 +165,7 @@ code { background: var(--surface-2); padding: 0 4px; }
 <script>
 (function () {
   var OWNER = "dreamzataliban", REPO = "thai-mod", API = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/";
-  var mods = [], sha = "", dirty = false, token = "", editing = -1, pendingImgs = {}; // slug -> {b64, url}
+  var filter = "all", query = "", mods = [], sha = "", dirty = false, token = "", editing = -1, pendingImgs = {}; // slug -> {b64, url}
   var $ = function (id) { return document.getElementById(id); };
 
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
@@ -173,24 +193,39 @@ code { background: var(--surface-2); padding: 0 4px; }
   function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "game-" + Date.now().toString(36); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
+  function statusOf(m) { return m.pending ? "pending" : "live"; }
   function render() {
-    $("count").textContent = "(" + mods.length + ")";
-    $("list").innerHTML = mods.map(function (m, i) {
-      var src = pendingImgs[m.img] ? pendingImgs[m.img].url : (m.img ? "img/" + m.img + ".jpg" : "");
-      var st = m.pending ? '<span class="pill wait">รออนุมัติ</span>' : (m.url ? '<span class="pill ok">ลง NexusMods แล้ว</span>' : '<span class="pill">ยังไม่มีลิงก์</span>');
-      var dr = m.drive ? '<span class="pill">Drive</span>' : "";
-      return '<div class="item">' + (src ? '<img src="' + esc(src) + '" alt="">' : '<div class="noimg"></div>') +
-        '<div><h3>' + esc(m.name) + '</h3><div class="meta"><span class="muted">' + esc(m.ver) + "</span>" + st + dr + "</div></div>" +
-        '<div class="acts"><button data-a="up" data-i="' + i + '"' + (i === 0 ? " disabled" : "") + ' aria-label="เลื่อนขึ้น">↑</button>' +
-        '<button data-a="down" data-i="' + i + '"' + (i === mods.length - 1 ? " disabled" : "") + ' aria-label="เลื่อนลง">↓</button>' +
-        '<button data-a="edit" data-i="' + i + '">แก้ไข</button><button class="danger" data-a="del" data-i="' + i + '">ลบ</button></div></div>';
+    $("count").textContent = mods.length ? "(" + mods.length + " เกม)" : "";
+    var np = mods.filter(function (m) { return m.pending; }).length;
+    var defs = [["all", "ทั้งหมด", mods.length], ["pending", "รออนุมัติ", np], ["live", "ลงแล้ว", mods.length - np]];
+    $("chips").innerHTML = defs.map(function (d) {
+      return '<button class="chip" data-f="' + d[0] + '" aria-pressed="' + (filter === d[0]) + '">' + d[1] + " " + d[2] + "</button>";
     }).join("");
+    var q = query.trim().toLowerCase(), plain = filter === "all" && !q, rows = [];
+    mods.forEach(function (m, i) {
+      if (filter !== "all" && statusOf(m) !== filter) return;
+      if (q && m.name.toLowerCase().indexOf(q) === -1) return;
+      var src = pendingImgs[m.img] ? pendingImgs[m.img].url : (m.img ? "img/" + m.img + ".jpg" : "");
+      var st = m.pending ? '<button class="pill wait" data-a="tog" data-i="' + i + '" title="กดเพื่อเปลี่ยนเป็น ลงแล้ว">รออนุมัติ</button>'
+        : '<button class="pill ' + (m.url ? "ok" : "") + '" data-a="tog" data-i="' + i + '" title="กดเพื่อเปลี่ยนเป็น รออนุมัติ">' + (m.url ? "ลงแล้ว" : "ไม่มีลิงก์") + "</button>";
+      var dr = m.drive ? '<span class="pill">Drive</span>' : "";
+      var mv = plain ? '<button data-a="up" data-i="' + i + '"' + (i === 0 ? " disabled" : "") + ' aria-label="เลื่อนขึ้น" title="เลื่อนขึ้น">↑</button>' +
+        '<button data-a="down" data-i="' + i + '"' + (i === mods.length - 1 ? " disabled" : "") + ' aria-label="เลื่อนลง" title="เลื่อนลง">↓</button>' : "";
+      rows.push('<div class="item">' + (src ? '<img src="' + esc(src) + '" alt="" loading="lazy">' : '<div class="noimg"></div>') +
+        '<div class="main"><h3 title="' + esc(m.name) + '">' + esc(m.name) + '</h3><div class="meta"><span class="ver">' + esc(m.ver) + "</span>" + st + dr + "</div></div>" +
+        '<div class="acts">' + mv + '<button data-a="edit" data-i="' + i + '" aria-label="แก้ไข" title="แก้ไข">✎</button>' +
+        '<button class="danger" data-a="del" data-i="' + i + '" aria-label="ลบ" title="ลบ">✕</button></div></div>');
+    });
+    $("list").innerHTML = rows.length ? rows.join("") : '<p class="empty" style="grid-column:1/-1">' + (mods.length ? "ไม่พบเกมที่ตรงกับตัวกรอง" : "ยังไม่มีข้อมูล") + "</p>";
   }
 
+  $("chips").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; filter = b.getAttribute("data-f"); render(); });
+  $("q").addEventListener("input", function () { query = this.value; render(); });
   $("list").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b || b.disabled) return;
     var i = +b.getAttribute("data-i"), a = b.getAttribute("data-a");
     if (a === "up" || a === "down") { var j = a === "up" ? i - 1 : i + 1; var t = mods[i]; mods[i] = mods[j]; mods[j] = t; render(); setDirty(true); }
+    else if (a === "tog") { if (mods[i].pending) delete mods[i].pending; else mods[i].pending = true; render(); setDirty(true); }
     else if (a === "del") { if (confirm("ลบ \"" + mods[i].name + "\" ออกจากเว็บ?")) { mods.splice(i, 1); render(); setDirty(true); } }
     else if (a === "edit") openDlg(i);
   });
@@ -250,6 +285,11 @@ code { background: var(--surface-2); padding: 0 4px; }
     $("dlg").close(); render(); setDirty(true);
   });
 
+  function setConnected(on) {
+    $("tokenForm").hidden = on; $("tokenLine").hidden = !on; $("tokenPanel").classList.toggle("slim", on);
+    if (on) $("tokenOk").textContent = "เชื่อมต่อ GitHub แล้ว (" + OWNER + "/" + REPO + ")";
+  }
+  $("btnTokenEdit").addEventListener("click", function () { $("tokenForm").hidden = false; $("tokenLine").hidden = true; $("tokenPanel").classList.remove("slim"); });
   function connect() {
     if (!token) return;
     say("กำลังโหลดข้อมูลจาก GitHub...", "info");
@@ -257,9 +297,9 @@ code { background: var(--surface-2); padding: 0 4px; }
       return r.json().then(function (j) { if (!r.ok) throw new Error(errText(r, j)); return j; });
     }).then(function (j) {
       sha = j.sha; mods = JSON.parse(textFromB64(j.content)); render();
-      $("tokenState").textContent = "เชื่อมต่อแล้ว (" + OWNER + "/" + REPO + ")"; $("btnAdd").disabled = false;
+      $("tokenState").textContent = "เชื่อมต่อแล้ว (" + OWNER + "/" + REPO + ")"; $("btnAdd").disabled = false; setConnected(true);
       say("โหลดแล้ว " + mods.length + " เกม", "ok"); setDirty(false); say("โหลดแล้ว " + mods.length + " เกม", "ok");
-    }).catch(function (e) { $("tokenState").textContent = "เชื่อมต่อไม่สำเร็จ"; $("btnAdd").disabled = true; say(e.message || "เชื่อมต่อไม่สำเร็จ", "err"); });
+    }).catch(function (e) { $("tokenState").textContent = "เชื่อมต่อไม่สำเร็จ"; $("btnAdd").disabled = true; setConnected(false); say(e.message || "เชื่อมต่อไม่สำเร็จ", "err"); });
   }
   $("btnToken").addEventListener("click", function () {
     var t = $("token").value.trim(); if (!t) { say("กรุณาวาง token", "err"); return; }
@@ -267,7 +307,7 @@ code { background: var(--surface-2); padding: 0 4px; }
   });
   $("btnForget").addEventListener("click", function () {
     token = ""; store("rtm_token", null); mods = []; render(); $("btnAdd").disabled = true; $("btnSave").disabled = true;
-    $("tokenState").textContent = "ยังไม่ได้ใส่ token"; say("ลืม token แล้ว", "info"); setDirty(false); $("btnSave").disabled = true;
+    $("tokenState").textContent = "ยังไม่ได้ใส่ token"; setConnected(false); say("ลืม token แล้ว", "info"); setDirty(false); $("btnSave").disabled = true;
   });
 
   function putFile(path, b64, message) {
