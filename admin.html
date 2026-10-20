@@ -22,7 +22,11 @@
   }
 }
 * { box-sizing: border-box; }
-@media (min-width: 2400px) { html { zoom: 1.5; } }
+@media (min-width: 2400px) {
+  html { zoom: 1.5; }
+  /* vh/vw are not divided by the zoom, so size the dialog against the zoomed viewport */
+  html dialog { max-height: calc((100vh - 24px) / 1.5); width: min(640px, calc((100vw - 24px) / 1.5)); }
+}
 html { background: var(--bg); }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.6; }
 .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 120px; }
@@ -74,6 +78,7 @@ button.pill:hover:not(:disabled) { background: var(--surface-2); color: var(--fg
 .bar .msg { flex: 1 1 200px; font-size: 14px; }
 .msg.ok { color: var(--ok); } .msg.err { color: var(--bad); } .msg.info { color: var(--muted); }
 dialog { width: min(640px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; background: var(--surface); color: var(--fg); border: 1px solid var(--fg); padding: 16px; }
+dialog { overscroll-behavior: contain; }
 dialog::backdrop { background: rgba(0, 0, 0, .55); }
 .radios { display: flex; gap: 16px; flex-wrap: wrap; }
 .radios label { display: flex; gap: 6px; align-items: center; font-weight: 500; margin: 4px 0; }

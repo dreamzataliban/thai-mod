@@ -154,6 +154,8 @@ h3 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-h
 .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 6px; }
 .card .btn { font-size: 15px; padding: 8px 16px; }
 .wait { font-size: 14px; color: var(--muted); }
+.dlc { font-size: 13px; color: var(--muted); }
+.dlc b { color: var(--fg); font-weight: 600; }
 .empty { padding: 32px; text-align: center; color: var(--muted); border: 2px dashed var(--line); }
 
 /* install */
@@ -311,19 +313,47 @@ function card(m) {
   var dis = function (t) { return '<a class="btn" aria-disabled="true" tabindex="-1">' + t + "</a>"; };
   var link = function (u, t, pri) { return '<a class="btn' + (pri ? " pri" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + t + "</a>"; };
   var btn = "";
-  if (m.drive) btn += link(m.drive, "ดาวน์โหลด (Google Drive)", true);
+  var dlKey = "dl-" + (m.img || m.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")).slice(0, 58);
+  if (m.drive) btn += '<a class="btn pri" data-dl="' + esc(dlKey) + '" href="' + esc(m.drive) + '" target="_blank" rel="noopener noreferrer">ดาวน์โหลด (Google Drive)</a>';
   if (m.url) btn += link(m.url, m.drive ? "NexusMods" : "ดาวน์โหลดบน NexusMods", !m.drive);
   if (!btn) btn = dis(m.pending ? "รอ NexusMods อนุมัติ" : "ลิงก์กำลังเพิ่ม");
   btn = '<div class="acts">' + btn + "</div>";
+  if (m.drive) btn += '<div class="dlc" data-key="' + esc(dlKey) + '" hidden>ดาวน์โหลดแล้ว <b></b> ครั้ง</div>';
   return '<article class="card" data-name="' + esc(m.name.toLowerCase()) + '">' + art +
     '<div class="body"><div class="row"><h3>' + esc(m.name) + '</h3><span class="ver">' + esc(m.ver) + "</span></div>" +
     '<p class="note">' + esc(m.note) + "</p>" + tags + btn + "</div></article>";
 }
 
+/* Google Drive download counter: counts clicks on the Drive button (Abacus counter API, free, no account).
+   If the service is unreachable the counter is simply hidden. */
+var CNT = "https://abacus.jasoncameron.dev", NS = "dreamzataliban-thai-mod";
+function showCount(key, n) {
+  var el = document.querySelector('.dlc[data-key="' + key + '"]');
+  if (el && n > 0) { el.querySelector("b").textContent = n.toLocaleString("en-US"); el.hidden = false; }
+}
+function loadCounts() {
+  Array.prototype.forEach.call(document.querySelectorAll(".dlc"), function (el) {
+    var k = el.getAttribute("data-key");
+    fetch(CNT + "/get/" + NS + "/" + k).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && typeof d.value === "number") showCount(k, d.value); }).catch(function () {});
+  });
+}
+document.addEventListener("click", function (e) {
+  var a = e.target.closest ? e.target.closest("a[data-dl]") : null;
+  if (!a) return;
+  var k = a.getAttribute("data-dl"), last = 0;
+  try { last = +localStorage.getItem("dl_" + k) || 0; } catch (x) {}
+  if (Date.now() - last < 6 * 3600 * 1000) return; /* one count per browser per game per 6 hours */
+  try { localStorage.setItem("dl_" + k, String(Date.now())); } catch (x) {}
+  fetch(CNT + "/hit/" + NS + "/" + k, { keepalive: true }).then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) { if (d && typeof d.value === "number") showCount(k, d.value); }).catch(function () {});
+});
+
 function init() {
 var grid = document.getElementById("grid");
 grid.innerHTML = MODS.map(card).join("");
 document.getElementById("count").textContent = MODS.length;
+  loadCounts();
 
 var q = document.getElementById("q"), none = document.getElementById("none");
 q.addEventListener("input", function () {
