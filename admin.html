@@ -157,6 +157,8 @@ code { background: var(--surface-2); padding: 0 4px; }
       <label><input type="radio" name="status" value="pending"> รออนุมัติ</label>
     </div>
     <p class="muted">ถ้ามีลิงก์ Drive และสถานะ "ลงแล้ว" จะแสดงทั้งสองปุ่ม ถ้าไม่ต้องการปุ่ม Drive ให้ลบลิงก์ Drive ออก</p>
+    <label for="fShare">ลิงก์เฉพาะเกมนี้ (เปิดหน้ารายละเอียดของเกมทันที)</label>
+    <div class="row"><input type="text" id="fShare" class="grow" readonly><button type="button" id="btnShareCopy">คัดลอก</button></div>
     <label for="fImg">ภาพปก (1920x600 หรืออัตราส่วนใกล้เคียง)</label>
     <input type="file" id="fImg" accept="image/*">
     <img class="preview" id="preview" alt="ตัวอย่างภาพปก" hidden>
@@ -238,6 +240,16 @@ code { background: var(--surface-2); padding: 0 4px; }
   $("btnAdd").addEventListener("click", function () { openDlg(-1); });
 
   var newImg = null; // {b64,url,slug} chosen in the open dialog
+  var SITE = "https://" + OWNER + ".github.io/" + REPO + "/";
+  function shareId() { var m = editing >= 0 ? mods[editing] : null; if (m && m.img) return m.img; var n = $("fName").value.trim(); return n ? slug(n) : ""; }
+  function updateShare() { var id = shareId(); $("fShare").value = id ? SITE + "#" + id : ""; $("btnShareCopy").disabled = !id; }
+  $("fName").addEventListener("input", updateShare);
+  $("btnShareCopy").addEventListener("click", function () {
+    var v = $("fShare").value, b = this; if (!v) return;
+    var done = function () { b.textContent = "คัดลอกแล้ว"; setTimeout(function () { b.textContent = "คัดลอก"; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(done, function () { $("fShare").select(); });
+    else { $("fShare").select(); document.execCommand("copy"); done(); }
+  });
   function openDlg(i) {
     editing = i; newImg = null; $("fImg").value = "";
     var m = i >= 0 ? mods[i] : { name: "", ver: "", note: "", tags: [], url: "", drive: "", pending: false, img: "" };
@@ -248,6 +260,7 @@ code { background: var(--surface-2); padding: 0 4px; }
     var src = m.img ? (pendingImgs[m.img] ? pendingImgs[m.img].url : "img/" + m.img + ".jpg") : "";
     $("preview").hidden = !src; if (src) $("preview").src = src;
     $("imgNote").textContent = m.img ? "ใช้ภาพเดิมอยู่ เลือกไฟล์ใหม่เพื่อเปลี่ยน" : "ยังไม่มีภาพปก";
+    updateShare();
     $("dlg").showModal();
   }
   $("btnCancel").addEventListener("click", function () { $("dlg").close(); });
