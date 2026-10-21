@@ -334,12 +334,18 @@ function tagsHtml(m) {
   return '<ul class="tags"><li class="full">แปล 100%</li><li class="plat"><img src="img/steam.png" alt="Steam" width="45" height="14"></li>' + (m.tags || []).filter(function (t) { return t !== "PC" && t !== "Steam"; }).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
 }
 
+function hostName(u) {
+  if (/(^|\.)mediafire\.com\//i.test(String(u).replace(/^https?:\/\//i, ""))) return "MediaFire";
+  if (/drive\.google\.com/i.test(u)) return "Google Drive";
+  return "ลิงก์ตรง";
+}
+
 function actionsHtml(m) {
   var dis = function (t) { return '<a class="btn" aria-disabled="true" tabindex="-1">' + t + "</a>"; };
   var link = function (u, t, pri) { return '<a class="btn' + (pri ? " pri" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + t + "</a>"; };
   var btn = "";
   var dlKey = "dl-" + gslug(m).slice(0, 58);
-  if (m.drive) btn += '<a class="btn pri" data-dl="' + esc(dlKey) + '" href="' + esc(m.drive) + '" target="_blank" rel="noopener noreferrer">ดาวน์โหลด (Google Drive)</a>';
+  if (m.drive) btn += '<a class="btn pri" data-dl="' + esc(dlKey) + '" href="' + esc(m.drive) + '" target="_blank" rel="noopener noreferrer">ดาวน์โหลด (' + hostName(m.drive) + ')</a>';
   if (m.url) btn += link(m.url, m.drive ? "NexusMods" : "ดาวน์โหลดบน NexusMods", !m.drive);
   if (!btn) btn = dis(m.pending ? "รอ NexusMods อนุมัติ" : "ลิงก์กำลังเพิ่ม");
   btn = '<div class="acts">' + btn + "</div>";

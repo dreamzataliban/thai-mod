@@ -149,8 +149,8 @@ code { background: var(--surface-2); padding: 0 4px; }
     <p class="muted">แท็ก "แปล 100%" และโลโก้ Steam ใส่ให้อัตโนมัติทุกเกม</p>
     <label for="fUrl">ลิงก์หน้าม็อดบน NexusMods</label>
     <input type="url" id="fUrl" placeholder="https://www.nexusmods.com/...">
-    <label for="fDrive">ลิงก์ Google Drive (ถ้ามี)</label>
-    <input type="url" id="fDrive" placeholder="วางลิงก์แชร์ได้เลย ระบบแปลงเป็นลิงก์ดาวน์โหลดตรงให้">
+    <label for="fDrive">ลิงก์ดาวน์โหลดตรง: Google Drive หรือ MediaFire (ถ้ามี)</label>
+    <input type="url" id="fDrive" placeholder="วางลิงก์ Drive (ระบบแปลงให้) หรือลิงก์ MediaFire ได้เลย">
     <label>สถานะบน NexusMods</label>
     <div class="radios">
       <label><input type="radio" name="status" value="live" checked> ลงแล้ว (แสดงปุ่ม NexusMods)</label>
@@ -216,7 +216,7 @@ code { background: var(--surface-2); padding: 0 4px; }
       var src = pendingImgs[m.img] ? pendingImgs[m.img].url : (m.img ? "img/" + m.img + ".jpg" : "");
       var st = m.pending ? '<button class="pill wait" data-a="tog" data-i="' + i + '" title="กดเพื่อเปลี่ยนเป็น ลงแล้ว">รออนุมัติ</button>'
         : '<button class="pill ' + (m.url ? "ok" : "") + '" data-a="tog" data-i="' + i + '" title="กดเพื่อเปลี่ยนเป็น รออนุมัติ">' + (m.url ? "ลงแล้ว" : "ไม่มีลิงก์") + "</button>";
-      var dr = m.drive ? '<span class="pill">Drive</span>' : "";
+      var dr = m.drive ? '<span class="pill">' + (/mediafire\.com/i.test(m.drive) ? "MediaFire" : "Drive") + '</span>' : "";
       var mv = plain ? '<button data-a="up" data-i="' + i + '"' + (i === 0 ? " disabled" : "") + ' aria-label="เลื่อนขึ้น" title="เลื่อนขึ้น">↑</button>' +
         '<button data-a="down" data-i="' + i + '"' + (i === mods.length - 1 ? " disabled" : "") + ' aria-label="เลื่อนลง" title="เลื่อนลง">↓</button>' : "";
       rows.push('<div class="item">' + (src ? '<img src="' + esc(src) + '" alt="" loading="lazy">' : '<div class="noimg"></div>') +
@@ -286,7 +286,7 @@ code { background: var(--surface-2); padding: 0 4px; }
     var url = $("fUrl").value.trim();
     if (url && !/^https:\/\//.test(url)) { alert("ลิงก์ NexusMods ต้องขึ้นต้นด้วย https://"); return; }
     var drive = driveFix($("fDrive").value);
-    if (drive && !/^https:\/\//.test(drive)) { alert("ลิงก์ Drive ต้องขึ้นต้นด้วย https://"); return; }
+    if (drive && !/^https:\/\//.test(drive)) { alert("ลิงก์ต้องขึ้นต้นด้วย https://"); return; }
     var old = editing >= 0 ? mods[editing] : {};
     var img = old.img || "";
     if (newImg) { img = img || slug(name); pendingImgs[img] = newImg; }
