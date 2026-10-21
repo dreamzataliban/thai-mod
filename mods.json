@@ -1,12 +1,13 @@
 [
   {
     "name": "Saint Seiya: Soldiers' Soul",
-    "ver": "1.0",
+    "ver": "1.0 - Fix",
     "img": "saint-seiya-soldiers-soul",
     "note": "แปลเป็นภาษาไทยครบทั้งเกม: เนื้อเรื่อง Legend of Cosmo ทุกภาค เมนู ตั้งค่า บทเรียน บทพูดตัวละครและผู้บรรยาย ชื่อตัวละคร/ท่า/ไอเทม ตัวอักษรในรูปวาดใหม่เป็นไทย พร้อมฟอนต์ไทย (เสียงพากย์ยังเป็นญี่ปุ่น)",
     "tags": [
       "ไม่มีวางจำหน่ายแล้ว"
     ],
+    "drive": "https://drive.google.com/uc?export=download&id=171Wswmhz_6pXva_Z7tR8Jfs8ZZWjbCEa",
     "pending": true,
     "url": ""
   },
