@@ -152,6 +152,7 @@ h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 
 /* 2560x1440 screens: same look as browser zoom 150% */
 @media (min-width: 2400px) { html { zoom: 1.5; } }
 .card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); min-width: 0; transition: transform .15s ease, box-shadow .15s ease; }
+.card { cursor: pointer; }
 .card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--fg); }
 .art { position: relative; aspect-ratio: 1000 / 312; background: var(--surface-2); overflow: hidden; border-bottom: 1px solid var(--line); }
 .art img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -423,6 +424,14 @@ gm.addEventListener("click", function (e) {
   else window.prompt("คัดลอกลิงก์นี้", url);
 });
 window.addEventListener("hashchange", route);
+/* whole card is clickable (links/buttons inside keep their own behaviour) */
+document.addEventListener("click", function (e) {
+  if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  var t = e.target; if (!t.closest) return;
+  if (t.closest("a,button,input,select,textarea,label")) return;
+  var c = t.closest("#grid .card"); if (!c) return;
+  var l = c.querySelector("h3 a"); if (l) l.click();
+});
 
 function init() {
 var grid = document.getElementById("grid");
