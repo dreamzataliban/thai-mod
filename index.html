@@ -346,10 +346,11 @@ function actionsHtml(m) {
   var btn = "";
   var dlKey = "dl-" + gslug(m).slice(0, 58);
   if (m.drive) btn += '<a class="btn pri" data-dl="' + esc(dlKey) + '" href="' + esc(m.drive) + '" target="_blank" rel="noopener noreferrer">ดาวน์โหลด (' + hostName(m.drive) + ')</a>';
-  if (m.url) btn += link(m.url, m.drive ? "NexusMods" : "ดาวน์โหลดบน NexusMods", !m.drive);
+  if (m.mediafire) btn += '<a class="btn' + (m.drive ? "" : " pri") + '" data-dl="' + esc(dlKey) + '" href="' + esc(m.mediafire) + '" target="_blank" rel="noopener noreferrer">ดาวน์โหลด (MediaFire)</a>';
+  if (m.url) btn += link(m.url, (m.drive || m.mediafire) ? "NexusMods" : "ดาวน์โหลดบน NexusMods", !(m.drive || m.mediafire));
   if (!btn) btn = dis(m.pending ? "รอ NexusMods อนุมัติ" : "ลิงก์กำลังเพิ่ม");
   btn = '<div class="acts">' + btn + "</div>";
-  if (m.drive) btn += '<div class="dlc" data-key="' + esc(dlKey) + '" hidden>ดาวน์โหลดแล้ว <b></b> ครั้ง</div>';
+  if (m.drive || m.mediafire) btn += '<div class="dlc" data-key="' + esc(dlKey) + '" hidden>ดาวน์โหลดแล้ว <b></b> ครั้ง</div>';
   return btn;
 }
 

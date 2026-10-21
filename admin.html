@@ -149,8 +149,10 @@ code { background: var(--surface-2); padding: 0 4px; }
     <p class="muted">แท็ก "แปล 100%" และโลโก้ Steam ใส่ให้อัตโนมัติทุกเกม</p>
     <label for="fUrl">ลิงก์หน้าม็อดบน NexusMods</label>
     <input type="url" id="fUrl" placeholder="https://www.nexusmods.com/...">
-    <label for="fDrive">ลิงก์ดาวน์โหลดตรง: Google Drive หรือ MediaFire (ถ้ามี)</label>
-    <input type="url" id="fDrive" placeholder="วางลิงก์ Drive (ระบบแปลงให้) หรือลิงก์ MediaFire ได้เลย">
+    <label for="fDrive">ลิงก์ Google Drive (ถ้ามี)</label>
+    <input type="url" id="fDrive" placeholder="วางลิงก์แชร์ได้เลย ระบบแปลงเป็นลิงก์ดาวน์โหลดตรงให้">
+    <label for="fMf">ลิงก์ MediaFire (ถ้ามี)</label>
+    <input type="url" id="fMf" placeholder="https://www.mediafire.com/file/...">
     <label>สถานะบน NexusMods</label>
     <div class="radios">
       <label><input type="radio" name="status" value="live" checked> ลงแล้ว (แสดงปุ่ม NexusMods)</label>
@@ -216,7 +218,7 @@ code { background: var(--surface-2); padding: 0 4px; }
       var src = pendingImgs[m.img] ? pendingImgs[m.img].url : (m.img ? "img/" + m.img + ".jpg" : "");
       var st = m.pending ? '<button class="pill wait" data-a="tog" data-i="' + i + '" title="กดเพื่อเปลี่ยนเป็น ลงแล้ว">รออนุมัติ</button>'
         : '<button class="pill ' + (m.url ? "ok" : "") + '" data-a="tog" data-i="' + i + '" title="กดเพื่อเปลี่ยนเป็น รออนุมัติ">' + (m.url ? "ลงแล้ว" : "ไม่มีลิงก์") + "</button>";
-      var dr = m.drive ? '<span class="pill">' + (/mediafire\.com/i.test(m.drive) ? "MediaFire" : "Drive") + '</span>' : "";
+      var dr = (m.drive ? '<span class="pill">' + (/mediafire\.com/i.test(m.drive) ? "MediaFire" : "Drive") + '</span>' : "") + (m.mediafire ? '<span class="pill">MediaFire</span>' : "");
       var mv = plain ? '<button data-a="up" data-i="' + i + '"' + (i === 0 ? " disabled" : "") + ' aria-label="เลื่อนขึ้น" title="เลื่อนขึ้น">↑</button>' +
         '<button data-a="down" data-i="' + i + '"' + (i === mods.length - 1 ? " disabled" : "") + ' aria-label="เลื่อนลง" title="เลื่อนลง">↓</button>' : "";
       rows.push('<div class="item">' + (src ? '<img src="' + esc(src) + '" alt="" loading="lazy">' : '<div class="noimg"></div>') +
@@ -255,7 +257,7 @@ code { background: var(--surface-2); padding: 0 4px; }
     var m = i >= 0 ? mods[i] : { name: "", ver: "", note: "", tags: [], url: "", drive: "", pending: false, img: "" };
     $("dlgTitle").textContent = i >= 0 ? "แก้ไขเกม" : "เพิ่มเกมใหม่";
     $("fName").value = m.name; $("fVer").value = m.ver || ""; $("fNote").value = m.note || "";
-    $("fTags").value = (m.tags || []).join(", "); $("fUrl").value = m.url || ""; $("fDrive").value = m.drive || "";
+    $("fTags").value = (m.tags || []).join(", "); $("fUrl").value = m.url || ""; $("fDrive").value = m.drive || ""; $("fMf").value = m.mediafire || "";
     document.querySelector('input[name=status][value=' + (m.pending ? "pending" : "live") + ']').checked = true;
     var src = m.img ? (pendingImgs[m.img] ? pendingImgs[m.img].url : "img/" + m.img + ".jpg") : "";
     $("preview").hidden = !src; if (src) $("preview").src = src;
@@ -287,6 +289,8 @@ code { background: var(--surface-2); padding: 0 4px; }
     if (url && !/^https:\/\//.test(url)) { alert("ลิงก์ NexusMods ต้องขึ้นต้นด้วย https://"); return; }
     var drive = driveFix($("fDrive").value);
     if (drive && !/^https:\/\//.test(drive)) { alert("ลิงก์ต้องขึ้นต้นด้วย https://"); return; }
+    var mf = $("fMf").value.trim();
+    if (mf && !/^https:\/\//.test(mf)) { alert("ลิงก์ MediaFire ต้องขึ้นต้นด้วย https://"); return; }
     var old = editing >= 0 ? mods[editing] : {};
     var img = old.img || "";
     if (newImg) { img = img || slug(name); pendingImgs[img] = newImg; }
@@ -295,10 +299,11 @@ code { background: var(--surface-2); padding: 0 4px; }
       tags: $("fTags").value.split(",").map(function (t) { return t.trim(); }).filter(Boolean)
     });
     if (drive) m.drive = drive; else delete m.drive;
+    if (mf) m.mediafire = mf; else delete m.mediafire;
     if (document.querySelector("input[name=status]:checked").value === "pending") m.pending = true; else delete m.pending;
     m.url = url;
     if (!m.img) delete m.img;
-    var ordered = {}; ["name", "ver", "img", "note", "tags", "drive", "pending", "url"].forEach(function (k) { if (k in m) ordered[k] = m[k]; });
+    var ordered = {}; ["name", "ver", "img", "note", "tags", "drive", "mediafire", "pending", "url"].forEach(function (k) { if (k in m) ordered[k] = m[k]; });
     Object.keys(m).forEach(function (k) { if (!(k in ordered)) ordered[k] = m[k]; });
     if (editing >= 0) mods[editing] = ordered; else mods.unshift(ordered);
     $("dlg").close(); render(); setDirty(true);
