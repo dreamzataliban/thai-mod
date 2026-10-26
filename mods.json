@@ -1,5 +1,14 @@
 [
   {
+    "name": "LEGO® Harry Potter™ Collection",
+    "ver": "V1.2",
+    "img": "lego-harry-potter-collection",
+    "note": "ม็อดแปลไทย LEGO Harry Potter Collection ทั้ง Years 1-4 และ 5-7: เมนู คำใบ้ ชื่อตัวละคร ด่าน คาถา และข้อความระบบ พร้อมฟอนต์ไทย",
+    "tags": [],
+    "pending": true,
+    "url": ""
+  },
+  {
     "name": "Tokyo Xtreme Racer",
     "ver": "V1.6.0",
     "img": "tokyo-xtreme-racer",
