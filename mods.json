@@ -96,7 +96,9 @@
     "ver": "V2.103",
     "img": "planet-crafter",
     "note": "แปลครบทุกบรรทัด เลือกภาษา ไทย (แปลโดย dreamzataliban) ได้ในเมนูตั้งค่า",
-    "tags": [],
+    "tags": [
+      "รวม DLC"
+    ],
     "drive": "https://drive.google.com/uc?export=download&id=14J2BIdQDCDaLk2Jfc15n3EsaGQG6-Sl2",
     "url": "https://www.nexusmods.com/planetcrafter/mods/265"
   },
