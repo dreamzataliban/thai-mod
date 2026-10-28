@@ -1,5 +1,14 @@
 [
   {
+    "name": "Bulletstorm: Full Clip Edition",
+    "ver": "V1.1",
+    "img": "bulletstorm-full-clip-edition",
+    "note": "แปลเมนู คำแนะนำ และซับไตเติลทั้งเกม พร้อมฟอนต์ไทย",
+    "tags": [],
+    "pending": true,
+    "url": "https://www.nexusmods.com/bulletstormfullclipedition/mods/26"
+  },
+  {
     "name": "Monster Sanctuary",
     "ver": "V2.2.2.1",
     "img": "monster-sanctuary",
