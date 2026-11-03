@@ -1,5 +1,23 @@
 [
   {
+    "name": "Fell & Sell",
+    "ver": "V1.8.5",
+    "img": "fell-sell",
+    "note": "แปลครบทั้งเมนู การตั้งค่า ไอเทม อาวุธ ชุดเกราะ เฟอร์นิเจอร์ สูตรการสร้าง บทแนะนำ จดหมายจากยาย สกิล พร ดันเจียน+ และความสำเร็จ พร้อมฟอนต์ไทยที่สระวรรณยุกต์ไม่ลอย",
+    "tags": [],
+    "pending": true,
+    "url": "https://www.nexusmods.com/fellandsell/mods/13"
+  },
+  {
+    "name": "Tower Dominion",
+    "ver": "V1.66",
+    "img": "tower-dominion",
+    "note": "แปลไทยครบทั้งเกม 2,348 ข้อความ พร้อมฟอนต์ไทยที่อ่านง่าย สระและวรรณยุกต์ถูกตำแหน่ง รองรับเกมเวอร์ชัน 1.66",
+    "tags": [],
+    "pending": true,
+    "url": "https://www.nexusmods.com/towerdominion/mods/9"
+  },
+  {
     "name": "Blood West",
     "ver": "V5.1.2",
     "img": "blood-west",
