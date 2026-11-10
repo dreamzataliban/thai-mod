@@ -1,5 +1,13 @@
 [
   {
+    "name": "ZED ZONE",
+    "ver": "V1.0.13",
+    "img": "zed-zone",
+    "note": "ม็อดแปลภาษาไทย ZED ZONE เพิ่มภาษาไทยในเมนูเลือกภาษา แปลครบประมาณ 6,590 บรรทัด ทั้งเมนู ไอเทม สกิล บทสนทนา โหมดต่าง ๆ และตัวแก้ไข MOD พร้อมฟอนต์ไทยที่แสดงสระวรรณยุกต์ถูกต้อง",
+    "tags": [],
+    "url": "https://www.nexusmods.com/zedzone/mods/5"
+  },
+  {
     "name": "Severed Steel",
     "ver": "V5.93",
     "img": "severed-steel",
