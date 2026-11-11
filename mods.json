@@ -1,5 +1,13 @@
 [
   {
+    "name": "DREADMOOR",
+    "ver": "0.4.40",
+    "img": "dreadmoor",
+    "note": "แปลครบทั้งเกม ทั้งเมนู ไอเท็ม ภารกิจ บทสนทนา วิทยุ และบทสอนการเล่น พร้อมฟอนต์ไทยที่เข้ากับสไตล์เกม ไม่แก้ไฟล์เดิมของเกม",
+    "tags": [],
+    "url": "https://www.nexusmods.com/dreadmoor/mods/4"
+  },
+  {
     "name": "ZED ZONE",
     "ver": "V1.0.13",
     "img": "zed-zone",
