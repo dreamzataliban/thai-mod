@@ -1,5 +1,14 @@
 [
   {
+    "name": "Milki Delivery",
+    "ver": "V1.0.1",
+    "img": "milki-delivery",
+    "note": "ม็อดแปลภาษาไทยทั้งเกม บทสนทนา เควสต์ ไอเทม เมนู พร้อมฟอนต์ไทยน่ารัก",
+    "tags": [],
+    "pending": true,
+    "url": ""
+  },
+  {
     "name": "CloverPit",
     "ver": "V1.4.11",
     "img": "cloverpit",
